@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.serwe.Model.Category;
+import com.example.serwe.Model.GetDirectionData;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -33,6 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class LocationRestaurantActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     GoogleMap mMap;
+    Category objectCategory;
     double latitude, longitude;
     double destLat, destLong;
 
@@ -96,11 +99,11 @@ public class LocationRestaurantActivity extends AppCompatActivity implements OnM
                 dataTransfer[4] = distance;
                 dataTransfer[5] = duration;
 
-//                GetDirectionData getDirectionData = new GetDirectionData();
-//                getDirectionData.execute( dataTransfer );
-//                linearLayoutText.setVisibility( View.VISIBLE );
-//                getDirection.setVisibility( View.GONE );
-//                //Toast.makeText( this, "Distance", Toast.LENGTH_SHORT ).show();
+                GetDirectionData getDirectionData = new GetDirectionData();
+                getDirectionData.execute( dataTransfer );
+                linearLayoutText.setVisibility( View.VISIBLE );
+                getDirection.setVisibility( View.GONE );
+                //Toast.makeText( this, "Distance", Toast.LENGTH_SHORT ).show();
 
             }
         } );
@@ -117,31 +120,31 @@ public class LocationRestaurantActivity extends AppCompatActivity implements OnM
         return placeUrl.toString();
     }
 
-//    private void getNoteLocation() {
-//
-//        notes = getIntent().getParcelableExtra( "mapdata" );
-//
-//        LatLng userLocation = new LatLng( notes.getLat(), notes.getLng());
-//        destLat = notes.getLat();
-//        destLong = notes.getLng();
-//
-//        Toast.makeText( getApplicationContext(), String.valueOf(  userLocation.latitude), Toast.LENGTH_SHORT ).show();
-//
-//        CameraPosition cameraPosition = CameraPosition.builder()
-//                .target( userLocation )
-//                .zoom( 15 )
-//                .bearing( 0 )
-//                .tilt( 45 )
-//                .build();
-//        mMap.animateCamera( CameraUpdateFactory.newCameraPosition( cameraPosition ) );
-//        mMap.addMarker( new MarkerOptions().position( userLocation )
-//                .title( "Note Location" )
-//                .icon( BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE) ));
-//
-//
-//
-//    }
-//
+    private void getRestaurant() {
+
+        objectCategory = getIntent().getParcelableExtra("directionobject");
+
+        LatLng userLocation = new LatLng( objectCategory.getLat(), objectCategory.getLong());
+        destLat = objectCategory.getLat();
+        destLong = objectCategory.getLong();
+
+        Toast.makeText( getApplicationContext(), String.valueOf(  userLocation.latitude), Toast.LENGTH_SHORT ).show();
+
+        CameraPosition cameraPosition = CameraPosition.builder()
+                .target( userLocation )
+                .zoom( 15 )
+                .bearing( 0 )
+                .tilt( 45 )
+                .build();
+        mMap.animateCamera( CameraUpdateFactory.newCameraPosition( cameraPosition ) );
+        mMap.addMarker( new MarkerOptions().position( userLocation )
+                .title( "Restaurant Location" )
+                .icon( BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE) ));
+
+
+
+    }
+
 
     private Boolean checkPermission()
     {
@@ -182,7 +185,7 @@ public class LocationRestaurantActivity extends AppCompatActivity implements OnM
         mMap = googleMap;
         mMap.setMapType( GoogleMap.MAP_TYPE_NORMAL );
         mMap.setMyLocationEnabled(true);
-        //getNoteLocation();
+        getRestaurant();
 
         mMap.setOnMapClickListener( new GoogleMap.OnMapClickListener() {
             @Override
@@ -195,7 +198,7 @@ public class LocationRestaurantActivity extends AppCompatActivity implements OnM
                 LatLng userLocation = new LatLng( latitude, longitude);
                 mMap.addMarker( new MarkerOptions().position( userLocation )
                         .title( "Your Location" ));
-                //getNoteLocation();
+                getRestaurant();
             }
         } );
 
@@ -219,7 +222,7 @@ public class LocationRestaurantActivity extends AppCompatActivity implements OnM
                             .bearing( 0 )
                             .tilt( 45 )
                             .build();
-                    mMap.animateCamera( CameraUpdateFactory.newCameraPosition( cameraPosition ) );
+                    //mMap.animateCamera( CameraUpdateFactory.newCameraPosition( cameraPosition ) );
                     mMap.addMarker( new MarkerOptions().position( userLocation )
                             .title( "Your Location" ));
 

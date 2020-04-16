@@ -3,8 +3,12 @@ package com.example.serwe;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
@@ -35,6 +39,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -43,6 +48,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -145,14 +154,18 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
                 viewHolder.txtMenuName.setText(model.getName());
+                LatLng latLng = new LatLng(model.getLat(), model.getLong());
+                viewHolder.txtMenuAddress.setText(getAddress(latLng));
 
                 Picasso.with(getBaseContext()).load(model.getImage())
+
                         .into(viewHolder.imageView);
                 final Category clickItem = model;
                 viewHolder.buttonDirection.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent foodList = new Intent(Home.this,LocationRestaurantActivity.class);
+                        foodList.putExtra("directionobject", model);
                         Toast.makeText(getApplicationContext(),"lat:"+String.valueOf( model.getLat())+" LOng:" + model.getLong(),Toast.LENGTH_LONG).show();
                         startActivity(foodList);
                     }
@@ -227,5 +240,59 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private String getAddress(LatLng latLng)
+    {
+        String address = "";
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try
+        {
+            List<Address> addresses = geocoder.getFromLocation( latLng.latitude, latLng.longitude, 1 );
+            if (addresses != null && addresses.size() > 0)
+            {
+                //Log.i(TAG, "on Location Result:" + addresses.get(0));
+                if (addresses.get(0).getThoroughfare() != null)
+                {
+                    address += addresses.get(0).getThoroughfare();
+
+                }
+
+
+                if (addresses.get(0).getLocality() != null)
+                {
+                    address += " " + addresses.get(0).getLocality();
+
+                }
+
+//                if (addresses.get(0).getAdminArea() != null)
+//                {
+//                    address += " " + addresses.get(0).getAdminArea();
+//                }
+//
+//                if (addresses.get(0).getCountryName() != null)
+//                {
+//                    address +=  " " + addresses.get(0).getCountryName();
+//
+//                }
+//                if (addresses.get(0).getPostalCode() != null)
+//                {
+//                    address += " " + addresses.get(0).getPostalCode();
+//
+//                }
+
+                Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return address;
+
     }
 }

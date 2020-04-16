@@ -12,9 +12,10 @@ import com.example.serwe.R;
 
 public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView txtMenuName;
+    public TextView txtMenuName, txtMenuAddress;
     public ImageView imageView;
     public Button buttonDirection;
+
 
     private ItemClickListener itemClickListener;
 
@@ -22,6 +23,7 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         super(itemView);
 
         txtMenuName = (TextView)itemView.findViewById(R.id.menu_name);
+        txtMenuAddress = (TextView)itemView.findViewById(R.id.menu_address);
         imageView = (ImageView)itemView.findViewById(R.id.menu_image);
         buttonDirection = itemView.findViewById(R.id.menu_direction);
 
