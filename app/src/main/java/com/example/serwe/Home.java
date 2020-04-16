@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import android.os.Looper;
 import android.view.View;
 
 import android.view.Menu;
@@ -154,6 +153,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                     @Override
                     public void onClick(View v) {
                         Intent foodList = new Intent(Home.this,LocationRestaurantActivity.class);
+                        Toast.makeText(getApplicationContext(),"lat:"+String.valueOf( model.getLat())+" LOng:" + model.getLong(),Toast.LENGTH_LONG).show();
                         startActivity(foodList);
                     }
                 });
