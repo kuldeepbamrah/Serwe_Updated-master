@@ -15,6 +15,7 @@ import com.example.serwe.Common.Common;
 import com.example.serwe.Database.Database;
 import com.example.serwe.Model.Food;
 import com.example.serwe.Model.Order;
+import com.example.serwe.Model.RandomId;
 import com.example.serwe.Model.Rating;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -191,22 +192,63 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
     }
 
+    public String getAlphaNumericString(int n) {
+
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
+
+        for (int i = 0; i < n; i++) {
+
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                    = (int) (AlphaNumericString.length()
+                    * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+
+        return sb.toString();
+    }
+
     @Override
     public void onPositiveButtonClicked(int i, @NotNull String s)
-    {
-        Rating rating = new Rating(Common.currentUser.getPhone(),foodId,String.valueOf(i),s);
 
-        ratingTbl.child(Common.currentUser.getPhone()).addValueEventListener(new ValueEventListener() {
+    {
+   Rating rating;
+//        String tempName="abc";
+//        if(Common.googleUser!=null) {
+////           rating = new Rating(Common.googleUser.getEmail(), foodId, String.valueOf(i), s);
+//            tempName = Common.googleUser.getToken();
+//        }
+//        else
+//        {
+//            //rating = new Rating(Common.currentUser.getPhone(), foodId, String.valueOf(i), s);
+//            if(Common.currentUser!=null)
+//            tempName = Common.currentUser.getPhone();
+//        }
+        String s1 = getAlphaNumericString(5);
+        rating = new Rating(s1, foodId, String.valueOf(i), s);
+
+
+        ratingTbl.child(s1).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(Common.currentUser.getPhone()).exists())
+               if(dataSnapshot.child(Common.currentUser.getPhone()).exists())
                 {
-                    ratingTbl.child(Common.currentUser.getPhone()).removeValue();
-                    ratingTbl.child(Common.currentUser.getPhone()).setValue(rating);
+                    ratingTbl.child(s1).removeValue();
+                    ratingTbl.child(s1).setValue(rating);
                 }
                 else
                 {
-                    ratingTbl.child(Common.currentUser.getPhone()).setValue(rating);
+                    ratingTbl.child(s1).setValue(rating);
                 }
                 Toast.makeText(getApplicationContext(),"Thank you for Feed back",Toast.LENGTH_LONG).show();
             }
@@ -217,4 +259,6 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
             }
         });
     }
+
+
 }

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.serwe.Common.Common;
+import com.example.serwe.Model.GoogleUser;
 import com.example.serwe.Model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -35,9 +36,16 @@ public class MainActivity extends AppCompatActivity {
         if(account!=null) {
             Toast.makeText(this, "Hello" + account.getDisplayName(), Toast.LENGTH_LONG).show();
             User user = new User();
+            account.getEmail();
+            GoogleUser googleUser = new GoogleUser();
+            googleUser.setEmail(account.getEmail());
+            googleUser.setName(account.getDisplayName());
+            //googleUser.setToken(account.getIdToken());
+
             user.setName(account.getDisplayName());
             Intent homeIntent= new Intent(MainActivity.this,Home.class);
             Common.currentUser=user;
+            Common.googleUser=googleUser;
             startActivity(homeIntent);
 
         }
@@ -105,9 +113,14 @@ public class MainActivity extends AppCompatActivity {
             String email = account.getEmail();
             String img_url = account.getPhotoUrl().toString();
             User user = new User();
+            GoogleUser googleUser = new GoogleUser();
+            googleUser.setEmail(account.getEmail());
+            googleUser.setName(account.getDisplayName());
+            googleUser.setToken(account.getIdToken());
             user.setName(account.getDisplayName());
             Intent homeIntent= new Intent(MainActivity.this,Home.class);
             Common.currentUser=user;
+            Common.googleUser=googleUser;
             startActivity(homeIntent);
             //finish();
             Toast.makeText(this, "Welcome,"+ name, Toast.LENGTH_SHORT).show();
