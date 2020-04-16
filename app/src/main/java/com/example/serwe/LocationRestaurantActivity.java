@@ -60,6 +60,7 @@ public class LocationRestaurantActivity extends AppCompatActivity implements OnM
 
 
 
+
         getUserLocation();
 
         if(!checkPermission())
@@ -218,7 +219,7 @@ public class LocationRestaurantActivity extends AppCompatActivity implements OnM
                             .bearing( 0 )
                             .tilt( 45 )
                             .build();
-                    //mMap.animateCamera( CameraUpdateFactory.newCameraPosition( cameraPosition ) );
+                    mMap.animateCamera( CameraUpdateFactory.newCameraPosition( cameraPosition ) );
                     mMap.addMarker( new MarkerOptions().position( userLocation )
                             .title( "Your Location" ));
 

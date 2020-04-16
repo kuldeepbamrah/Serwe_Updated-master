@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:id="@+id/mapDirection"></fragment>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:layout_margin="20dp"
+            >
+
+            <Button
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:text="Get Direction"
+                android:padding="10dp"
+
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:id="@+id/buttongetDirection"></Button>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="visible"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/layoutToHide"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="bottom"
+            >
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/distance_text"
+                android:textColor="@android:color/background_light"
+                android:text="Distance"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"></TextView>
+
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/duration_text"
+                android:textColor="@android:color/background_light"
+                android:text="Duration"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"></TextView>
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+
+
+</LinearLayout>
