@@ -1,6 +1,9 @@
 package com.example.serwe.Model;
 
-public class Category {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Category implements Parcelable {
     private String Name;
     private String Image;
     private long Table;
@@ -9,6 +12,26 @@ public class Category {
 
     public Category() {
     }
+
+    protected Category(Parcel in) {
+        Name = in.readString();
+        Image = in.readString();
+        Table = in.readLong();
+        Lat = in.readDouble();
+        Long = in.readDouble();
+    }
+
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel in) {
+            return new Category(in);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
 
     public double getLat() {
         return Lat;
@@ -56,5 +79,19 @@ public class Category {
 
     public void setTable(long table) {
         Table = table;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(Name);
+        dest.writeString(Image);
+        dest.writeLong(Table);
+        dest.writeDouble(Lat);
+        dest.writeDouble(Long);
     }
 }

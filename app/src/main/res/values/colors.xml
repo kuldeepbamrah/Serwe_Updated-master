@@ -3,6 +3,10 @@
     <color name="colorPrimary">#EDA32C</color>
     <color name="colorPrimaryDark">#EDA32C</color>
     <color name="colorAccent">#EDA32C</color>
+    <color name="darkyellow">#D88500</color>
+
+    <color name="mehroon">#C82115</color>
+
 
     <color name="btnSignUp">#39796b</color>
     <color name="btnSignActive">#A9d440</color>

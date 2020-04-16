@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import android.os.Parcelable;
 import android.view.View;
 
 import android.view.Menu;
@@ -147,12 +148,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 viewHolder.txtMenuName.setText(model.getName());
 
                 Picasso.with(getBaseContext()).load(model.getImage())
+
                         .into(viewHolder.imageView);
                 final Category clickItem = model;
                 viewHolder.buttonDirection.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent foodList = new Intent(Home.this,LocationRestaurantActivity.class);
+                        foodList.putExtra("directionobject", model);
                         Toast.makeText(getApplicationContext(),"lat:"+String.valueOf( model.getLat())+" LOng:" + model.getLong(),Toast.LENGTH_LONG).show();
                         startActivity(foodList);
                     }
