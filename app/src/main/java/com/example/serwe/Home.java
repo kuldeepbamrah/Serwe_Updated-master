@@ -155,8 +155,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
                 viewHolder.txtMenuName.setText(model.getName());
                 LatLng latLng = new LatLng(model.getLat(), model.getLong());
+                String address = getAddress(latLng);
                 viewHolder.txtMenuAddress.setText(getAddress(latLng));
-
+                model.setAddress(address);
                 Picasso.with(getBaseContext()).load(model.getImage())
 
                         .into(viewHolder.imageView);
@@ -176,6 +177,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                         //Get categoryId and send to new activity
                         Intent foodList = new Intent(Home.this,FoodList.class);
                         foodList.putExtra("CategoryId",adapter.getRef(position).getKey());
+                        foodList.putExtra("restaurantDetail", model);
                         Toast.makeText(getApplicationContext(),""+model.getTable(),Toast.LENGTH_LONG).show();
                         startActivity(foodList);
                     }
