@@ -65,11 +65,11 @@ public class OrderStatus extends AppCompatActivity {
             @Override
             protected void populateViewHolder(OrderViewHolder viewHolder, Request model, int position) {
                 // get key from DatabaseReference
-                viewHolder.txtOrderId.setText(adapter.getRef(position).getKey());
+                viewHolder.txtOrderId.setText("Order No. : " + adapter.getRef(position).getKey());
                 // set text for order status, address and phone
-                viewHolder.txtOrderStatus.setText(convertCodeToStatus(model.getStatus()));
-                viewHolder.txtOrAddress.setText(model.getAddress());
-                viewHolder.txtOrderPhone.setText(model.getPhone());
+                viewHolder.txtOrderStatus.setText("Order Status. : " + convertCodeToStatus(model.getStatus()));
+                viewHolder.txtOrAddress.setText("Order Address. : " + model.getAddress());
+                viewHolder.txtOrderPhone.setText("Order Total. : " + model.getTotal());
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
