@@ -102,6 +102,16 @@
                         android:fontFamily="sans-serif-medium"
                         android:background="@color/colorPrimaryDark"
                         android:textColor="@color/cardview_light_background"
+                        />
+                    <Button
+                        android:id="@+id/menu_table"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:text="Book Table"
+                        android:textSize="12dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:background="@color/colorPrimaryDark"
+                        android:textColor="@color/cardview_light_background"
                         >
 
                     </Button>
