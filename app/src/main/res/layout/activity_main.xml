@@ -36,6 +36,7 @@
             android:textColor="@android:color/white"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:background="@color/colorPrimaryDark"
             android:layout_height="wrap_content"
             android:layout_margin="8dp" />
 
@@ -45,6 +46,8 @@
             android:text="Sign In"
             android:textColor="@android:color/white"
             android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp" />
@@ -52,11 +55,14 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
+        android:textColor="@android:color/background_light"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
         android:layout_below="@+id/linearLayout2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
+
         android:text="Google Sign In" />
 
 </RelativeLayout>

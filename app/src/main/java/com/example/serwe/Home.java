@@ -108,13 +108,22 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     private void loadMenu() {
 
+
          adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
             @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
                 viewHolder.txtMenuName.setText(model.getName());
+
                 Picasso.with(getBaseContext()).load(model.getImage())
                         .into(viewHolder.imageView);
                 final Category clickItem = model;
+                viewHolder.buttonDirection.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent foodList = new Intent(Home.this,LocationRestaurantActivity.class);
+                        startActivity(foodList);
+                    }
+                });
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {

@@ -4,6 +4,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="api_key">AIzaSyCGNZIaTG3Lj3gj5I6OrIvf9NZMQbz2oeU</string>
+    <string name="api_key_class">AIzaSyD2ktEXAQnHpIkh5TqnJgqEaXwcs1olsmY</string>
     <string name="action_settings">Settings</string>
 </resources>

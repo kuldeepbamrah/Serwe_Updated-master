@@ -1,6 +1,7 @@
 package com.example.serwe.ViewHolder;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     public TextView txtMenuName;
     public ImageView imageView;
+    public Button buttonDirection;
 
     private ItemClickListener itemClickListener;
 
@@ -21,6 +23,7 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
         txtMenuName = (TextView)itemView.findViewById(R.id.menu_name);
         imageView = (ImageView)itemView.findViewById(R.id.menu_image);
+        buttonDirection = itemView.findViewById(R.id.menu_direction);
 
         itemView.setOnClickListener(this);
     }
