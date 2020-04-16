@@ -8,18 +8,28 @@ public class Request {
     private String address;
     private String total;
     private String status;
+    private String paymentState;
     private List<Order> foods;
 
     public Request() {
     }
 
-    public Request(String phone, String name, String address, String total, List<Order> foods) {
+    public Request(String phone, String name, String address, String total, String status, String paymentState, List<Order> foods) {
         this.phone = phone;
         this.name = name;
         this.address = address;
         this.total = total;
+        this.status = status;
+        this.paymentState = paymentState;
         this.foods = foods;
-        this.status = "0"; // Default is 0. 0: Placed, 1: Shipping, 2: Shipped
+    }
+
+    public String getPaymentState() {
+        return paymentState;
+    }
+
+    public void setPaymentState(String paymentState) {
+        this.paymentState = paymentState;
     }
 
     public String getStatus() {
