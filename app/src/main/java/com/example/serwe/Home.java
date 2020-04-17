@@ -231,6 +231,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                                 intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
                                 startActivityForResult(intent,PAYPAL_REQUEST_CODE);
 
+                                category.child(adapter.getRef(position).getKey()).child("table").setValue(model.getTable()-1);
+
                             }
                         });
 
@@ -397,6 +399,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                         new Database(getBaseContext()).cleanCart();
                         Toast.makeText(this, " Thank you,Table Booked", Toast.LENGTH_SHORT).show();
                         finish();
+
 
 
                     } catch (JSONException e) {
