@@ -9,6 +9,7 @@ public class Category implements Parcelable {
     private long Table;
     private  double Lat;
     private  double Long;
+    private String address;
 
     public Category() {
     }
@@ -19,6 +20,14 @@ public class Category implements Parcelable {
         Table = in.readLong();
         Lat = in.readDouble();
         Long = in.readDouble();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public static final Creator<Category> CREATOR = new Creator<Category>() {
@@ -94,4 +103,6 @@ public class Category implements Parcelable {
         dest.writeDouble(Lat);
         dest.writeDouble(Long);
     }
+
+
 }

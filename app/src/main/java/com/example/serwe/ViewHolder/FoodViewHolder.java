@@ -11,7 +11,7 @@ import com.example.serwe.R;
 
 
 public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    public TextView food_name;
+    public TextView food_name, food_price;
     public ImageView food_image;
 
     private ItemClickListener itemClickListener;
@@ -25,6 +25,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
         food_name = (TextView)itemView.findViewById(R.id.food_name);
         food_image= (ImageView)itemView.findViewById(R.id.food_image);
+        food_price = itemView.findViewById(R.id.food_price);
 
         itemView.setOnClickListener(this);
     }
