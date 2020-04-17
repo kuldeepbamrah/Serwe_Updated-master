@@ -1,6 +1,8 @@
 package com.example.serwe;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -13,6 +15,7 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,9 +30,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.serwe.Common.Common;
+import com.example.serwe.Common.Config;
+import com.example.serwe.Database.Database;
 import com.example.serwe.Interface.ItemClickListener;
 import com.example.serwe.Model.Category;
 
+import com.example.serwe.Model.Request;
 import com.example.serwe.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -42,21 +48,32 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseDatabase database;
-    DatabaseReference category;
+    private static final int PAYPAL_REQUEST_CODE = 9999;
+    DatabaseReference category,requests;
 
     TextView txtFullName;
 
@@ -65,6 +82,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter;
     GoogleSignInClient mGoogleSignInClient ;
+
+
+    static PayPalConfiguration config = new PayPalConfiguration()
+
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+
+            .clientId(Config.Paypal_Client_ID).rememberUser(true);
 
 
 
@@ -81,6 +105,11 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         setContentView(R.layout.activity_home);
 
 
+        Intent intent = new Intent(this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
+        startService(intent);
+
+
         if(!checkPermission())
         {
             requestPermission();
@@ -95,6 +124,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         database=FirebaseDatabase.getInstance();
         category = database.getReference("Category");
 
+        requests = database.getReference("Requests");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -169,6 +199,43 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                         foodList.putExtra("directionobject", model);
                         Toast.makeText(getApplicationContext(),"lat:"+String.valueOf( model.getLat())+" LOng:" + model.getLong(),Toast.LENGTH_LONG).show();
                         startActivity(foodList);
+                    }
+                });
+                viewHolder.bookTable.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+
+                        //MaterialDialog(this, BottomSheet()).show
+                        final BottomSheetDialog mBottomSheetDialog = new BottomSheetDialog(Home.this);
+                       View sheetView = getLayoutInflater().inflate(R.layout.table_bottom_sheet, null);
+                        mBottomSheetDialog.setContentView(sheetView);
+                        //Activity activity = (Activity)getApplicationContext();
+
+                            mBottomSheetDialog.show();
+
+                        TextView textView = sheetView.findViewById(R.id.avail_tables);
+                        textView.setText(String.valueOf(model.getTable()));
+                        Button button = sheetView.findViewById(R.id.btnPay);
+                        button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String formatAmount ="10";
+
+                                PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(formatAmount),
+                                        "CAD",
+                                        "Serwe Table",
+                                        PayPalPayment.PAYMENT_INTENT_SALE);
+                                Intent intent = new Intent (getApplicationContext() , PaymentActivity.class);
+                                intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
+                                intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
+                                startActivityForResult(intent,PAYPAL_REQUEST_CODE);
+
+                            }
+                        });
+
+                    {
+                    }
                     }
                 });
                 viewHolder.setItemClickListener(new ItemClickListener() {
@@ -296,5 +363,52 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         }
         return address;
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PAYPAL_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                PaymentConfirmation confirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                if (confirmation != null) {
+                    try {
+                        String paymentDetail = confirmation.toJSONObject().toString(4);
+                        JSONObject jsonObject = new JSONObject(paymentDetail);
+
+                        // Create new request
+                        Request request = new Request(
+                                Common.currentUser.getPhone(),
+                                Common.currentUser.getName(),
+                                null,
+                                "10",
+                                "0",
+                                jsonObject.getJSONObject("response").getString("state"),
+                                null
+                        );
+
+                        //Request request1 = new Request(Common.currentUser.getPhone(),Common.currentUser.getName(),address,txtTotalPrice.getText().toString(),"0",);
+
+                        // Submit to Firebase
+                        // Using System.CurrentMillis to key
+                        requests.child(String.valueOf(System.currentTimeMillis()))
+                                .setValue(request);
+                        // Deleting cart
+                        new Database(getBaseContext()).cleanCart();
+                        Toast.makeText(this, " Thank you,Table Booked", Toast.LENGTH_SHORT).show();
+                        finish();
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(this,"went wrong",Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }
     }
 }

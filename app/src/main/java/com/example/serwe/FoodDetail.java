@@ -241,7 +241,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
         ratingTbl.child(s1).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               if(dataSnapshot.child(Common.currentUser.getPhone()).exists())
+               if(dataSnapshot.child(s1).exists())
                 {
                     ratingTbl.child(s1).removeValue();
                     ratingTbl.child(s1).setValue(rating);

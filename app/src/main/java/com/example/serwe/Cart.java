@@ -146,7 +146,7 @@ public class Cart extends AppCompatActivity {
                         .replace(",","");
 
                 PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(formatAmount),
-                        "USD",
+                        "CAD",
                         "Serwe Order",
                         PayPalPayment.PAYMENT_INTENT_SALE);
                 Intent intent = new Intent (getApplicationContext() , PaymentActivity.class);
