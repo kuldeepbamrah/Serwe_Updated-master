@@ -3,6 +3,7 @@ package com.example.serwe.Model;
 public class Rating
 {
     private String userPhone;
+
     private String foodId;
     private String rateValue;
     private String comment;
@@ -16,6 +17,8 @@ public class Rating
         this.rateValue = rateValue;
         this.comment = comment;
     }
+
+
 
     public String getUserPhone() {
         return userPhone;
