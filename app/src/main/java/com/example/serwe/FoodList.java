@@ -86,7 +86,7 @@ public class FoodList extends AppCompatActivity {
             protected void populateViewHolder(FoodViewHolder viewHolder, Food model, int position) {
                 viewHolder.food_name.setText(model.getName());
                 viewHolder.food_price.setText( "Price: "+ model.getPrice() + " $");
-                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.food_image);
+                Picasso.with(getBaseContext()).load(model.getImage()). into(viewHolder.food_image);
                 final  Food local = model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.serwe.Common.Common;
+import com.example.serwe.Database.Database;
 import com.example.serwe.Model.GoogleUser;
 import com.example.serwe.Model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             Common.currentUser=user;
             Common.googleUser=googleUser;
             startActivity(homeIntent);
+            //new Database(getBaseContext()).cleanCart();
 
         }
     }

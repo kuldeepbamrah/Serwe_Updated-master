@@ -93,6 +93,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
                 ));
 
+                //new Database(getBaseContext()).cleanCart();
                 Toast.makeText(FoodDetail.this, "Added to Cart", Toast.LENGTH_SHORT).show();
             }
         });
