@@ -114,7 +114,8 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                                 numberButton.getNumber(),
                                 currentFood.getPrice(),
                                 currentFood.getDiscount(),
-                                spinnerSpiceLevel.getSelectedItem().toString(), comment.getText().toString()
+                                spinnerSpiceLevel.getSelectedItem().toString(),
+                                comment.getText().toString()
 
                         ));
 

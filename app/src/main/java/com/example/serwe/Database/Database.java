@@ -13,7 +13,7 @@ import java.util.List;
 
 
 public class Database extends SQLiteAssetHelper {
-    private static final String DB_NAME="SerweDB.db";
+    private static final String DB_NAME="SerweDBU.db";
     private static final int DB_VER=1;
     public Database(Context context){
         super(context,DB_NAME,null,DB_VER);
@@ -24,7 +24,7 @@ public class Database extends SQLiteAssetHelper {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String[] sqlSelect={"ProductName","ProductId","Quantity","Price","Discount"};
+        String[] sqlSelect={"ProductName","ProductId","Quantity","Price","Discount","Spicy","Comment"};
         String sqlTable="OrderDetail";
 
         qb.setTables(sqlTable);

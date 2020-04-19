@@ -21,20 +21,20 @@ public class Order {
         Comment = comment;
     }
 
-    public String getSpicy() {
-        return Spicy;
-    }
-
-    public void setSpicy(String spicy) {
-        Spicy = spicy;
-    }
-
     public String getComment() {
         return Comment;
     }
 
     public void setComment(String comment) {
         Comment = comment;
+    }
+
+    public String getSpicy() {
+        return Spicy;
+    }
+
+    public void setSpicy(String spicy) {
+        Spicy = spicy;
     }
 
     public String getProductId() {
