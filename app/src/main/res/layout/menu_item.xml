@@ -79,12 +79,14 @@
                     android:orientation="horizontal"
                     >
 
-                    <ImageView
+                    <RatingBar
                         android:id="@+id/menu_rating"
-                        android:layout_width="100dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/rating"
-                        android:scaleType="centerCrop" />
+                        android:rating="1"
+                        android:max="5"
+                        android:isIndicator="true"
+                         />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

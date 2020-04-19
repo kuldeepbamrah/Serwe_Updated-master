@@ -10,6 +10,7 @@ public class Category implements Parcelable {
     private  double Lat;
     private  double Long;
     private String address;
+    private String rating;
 
     public Category() {
     }
