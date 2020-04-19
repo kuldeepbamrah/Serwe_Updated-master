@@ -38,7 +38,10 @@ public class Database extends SQLiteAssetHelper {
                         c.getString(c.getColumnIndex("ProductName")),
                         c.getString(c.getColumnIndex("Quantity")),
                         c.getString(c.getColumnIndex("Price")),
-                        c.getString(c.getColumnIndex("Discount"))
+                        c.getString(c.getColumnIndex("Discount")),
+                        c.getString(c.getColumnIndex("Spicy")),
+                        c.getString(c.getColumnIndex("Comment"))
+
                 ));
             }while (c.moveToNext());
         }
@@ -48,12 +51,14 @@ public class Database extends SQLiteAssetHelper {
     public void addToCart(Order order)
     {
         SQLiteDatabase db = getReadableDatabase();
-        String query = String.format("INSERT INTO OrderDetail(ProductId,ProductName,Quantity,Price,Discount) VALUES('%s','%s','%s','%s','%s');",
+        String query = String.format("INSERT INTO OrderDetail(ProductId,ProductName,Quantity,Price,Discount,Spicy,Comment) VALUES('%s','%s','%s','%s','%s','%s','%s');",
                 order.getProductId(),
                 order.getProductName(),
                 order.getQuantity(),
                 order.getPrice(),
-                order.getDiscount());
+                order.getDiscount(),
+        order.getSpicy(),
+        order.getComment());
         db.execSQL(query);
 
     }

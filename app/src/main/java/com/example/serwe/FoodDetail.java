@@ -1,9 +1,14 @@
 package com.example.serwe;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,14 +89,51 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Database(getBaseContext()).addToCart(new Order(
-                        foodId,
-                        currentFood.getName(),
-                        numberButton.getNumber(),
-                        currentFood.getPrice(),
-                        currentFood.getDiscount()
 
-                ));
+
+                // new view inflate for selecting nearby places option
+
+                AlertDialog.Builder builder = new AlertDialog.Builder( FoodDetail.this );
+                // builder.setTitle( "Edit Employee" );
+                LayoutInflater inflater = LayoutInflater.from( FoodDetail.this );
+                View v = inflater.inflate( R.layout.custom_food_layout,null );
+                builder.setView( v );
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                final Spinner spinnerSpiceLevel = v.findViewById( R.id.spinnerSpicyLevel );
+                final EditText comment = v.findViewById(R.id.edtcommentfood);
+                Button buttonEdit = v.findViewById( R.id.button_addcart );
+
+                buttonEdit.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        new Database(getBaseContext()).addToCart(new Order(
+                                foodId,
+                                currentFood.getName(),
+                                numberButton.getNumber(),
+                                currentFood.getPrice(),
+                                currentFood.getDiscount(),
+                                spinnerSpiceLevel.getSelectedItem().toString(), comment.getText().toString()
+
+                        ));
+
+                        Toast.makeText(FoodDetail.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+
+                        alertDialog.dismiss();
+
+
+
+                    }
+                } );
+//                new Database(getBaseContext()).addToCart(new Order(
+//                        foodId,
+//                        currentFood.getName(),
+//                        numberButton.getNumber(),
+//                        currentFood.getPrice(),
+//                        currentFood.getDiscount()
+
+//                ));
 
                 //new Database(getBaseContext()).cleanCart();
                 Toast.makeText(FoodDetail.this, "Added to Cart", Toast.LENGTH_SHORT).show();

@@ -7,4 +7,11 @@
     <string name="api_key">AIzaSyCGNZIaTG3Lj3gj5I6OrIvf9NZMQbz2oeU</string>
     <string name="api_key_class">AIzaSyD2ktEXAQnHpIkh5TqnJgqEaXwcs1olsmY</string>
     <string name="action_settings">Settings</string>
+    <array name="array_spicy_level">
+        <item>Mild Spicy</item>
+        <item>Medium Spicy</item>
+        <item>Regular Spicy</item>
+        <item>Extra Spicy</item>
+
+    </array>
 </resources>
