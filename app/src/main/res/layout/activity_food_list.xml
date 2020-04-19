@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,17 +8,24 @@
     android:background="@android:color/background_dark"
     tools:context="com.example.serwe.FoodDetail">
 
-   <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
 
+       <com.google.android.material.appbar.AppBarLayout
+           android:id="@+id/app_bar_layout"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:theme="@style/AppTheme.AppBarOverlay"
+           android:fitsSystemWindows="true"
+           >
 
-    >
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+       <com.google.android.material.appbar.CollapsingToolbarLayout
+           android:id="@+id/collapsing"
+           android:layout_width="match_parent"
+           android:layout_height="350dp"
+           android:fitsSystemWindows="true"
+           app:layout_scrollFlags="scroll|exitUntilCollapsed"
+           app:contentScrim="#0e0d0e"
+           app:collapsedTitleTextAppearance="@android:color/transparent"
+           >
     <ImageView
         android:id="@+id/img_restaurantdetail"
         android:layout_width="match_parent"
@@ -28,10 +36,8 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_marginTop="100dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_width="match_parent"
+        android:layout_gravity="bottom|right"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="15dp"
         app:cardElevation="2dp"
@@ -42,7 +48,8 @@
             android:layout_height="wrap_content"
             android:background="@android:color/background_dark"
             android:paddingLeft="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:id="@+id/restaurant_namedetail"
@@ -85,6 +92,7 @@
                 android:layout_marginTop="10dp"
                 android:isIndicator="true"
                 android:max="5"
+                android:backgroundTint="@android:color/black"
                 android:background="@android:color/background_light"
                 android:rating="0">
 
@@ -93,29 +101,24 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-</RelativeLayout>
+
+       </com.google.android.material.appbar.CollapsingToolbarLayout>
+       </com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_rating"
+        android:src="@drawable/ic_star_black_24dp"
+        android:backgroundTint="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:elevation="6dp"
+        app:layout_anchor="@id/app_bar_layout"
+        app:layout_anchorGravity="bottom|right"
+        app:useCompatPadding="true"
+        />
 
 
 
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Menu of Restaurant"
-                android:background="@color/darkyellow"
-                android:padding="15dp"
-                android:textColor="@android:color/background_light"
-                android:fontFamily="sans-serif-black"
-                android:textAllCaps="true"
-                android:textSize="20dp"
-                android:textAlignment="center"
-                ></TextView>
 
 
 
@@ -123,11 +126,10 @@
                 android:id="@+id/recycler_food"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical">
+                android:scrollbars="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
-</LinearLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
