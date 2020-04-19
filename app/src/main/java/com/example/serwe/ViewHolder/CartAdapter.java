@@ -79,10 +79,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartviewHolder>{
         //int totalPrice = (Integer.parseInt(price)) * (Integer.parseInt(quantity));
         //holder.txt_price.setText(fmt.format(totalPrice));
 
-        holder.txt_cart_name.setText(name);
-        holder.txt_cart_spicy.setText(listData.get(position).getSpicy());
-        holder.txt_cart_comment.setText(listData.get(position).getComment());
-        holder.txt_price.setText(price);
+        holder.txt_cart_name.setText("Food Name: " + name);
+        holder.txt_cart_spicy.setText("Spicy Level: " + listData.get(position).getSpicy());
+        holder.txt_cart_comment.setText("Comment: " + listData.get(position).getComment());
+        holder.txt_price.setText("Food Price: " + price + " $");
 
 
 
