@@ -19,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 public class MainActivity extends AppCompatActivity {
 
     Button btnSignUp,btnSignIn,button3;
+    SignInButton gBtn;
     private static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient ;
 
@@ -60,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnSignIn = (Button)findViewById(R.id.btnSignIn);
         btnSignUp = (Button)findViewById(R.id.btnSignUp);
-        button3 = (Button)findViewById(R.id.button3);
+        //button3 = (Button)findViewById(R.id.button3);
+        gBtn = findViewById(R.id.gBtn);
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        button3.setOnClickListener(new View.OnClickListener() {
+        gBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();
