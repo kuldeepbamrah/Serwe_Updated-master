@@ -36,6 +36,7 @@ import com.example.serwe.Interface.ItemClickListener;
 import com.example.serwe.Model.Category;
 
 import com.example.serwe.Model.Request;
+import com.example.serwe.Service.ListenOrder;
 import com.example.serwe.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -162,6 +163,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        Intent service = new Intent(Home.this, ListenOrder.class);
+        startService(service);
 
 
     }
