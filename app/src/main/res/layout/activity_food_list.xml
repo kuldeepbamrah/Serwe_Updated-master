@@ -92,8 +92,7 @@
                 android:layout_marginTop="10dp"
                 android:isIndicator="true"
                 android:max="5"
-                android:backgroundTint="@android:color/black"
-                android:background="@android:color/background_light"
+                android:background="@android:color/black"
                 android:rating="0">
 
             </RatingBar>
