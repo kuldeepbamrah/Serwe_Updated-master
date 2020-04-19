@@ -167,8 +167,7 @@
                         android:id="@+id/ratingBar"
                         android:rating="0"
                         android:max="5"
-                        android:isIndicator="true"
-                        android:background="@android:color/black">
+                        android:isIndicator="true">
 
                     </RatingBar>
                 <TextView
