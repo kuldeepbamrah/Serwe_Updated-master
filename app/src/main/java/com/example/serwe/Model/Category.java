@@ -1,34 +1,44 @@
 package com.example.serwe.Model;
 
+import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+@SuppressLint("ParcelCreator")
 public class Category implements Parcelable {
-    private String Name;
-    private String Image;
+    private String Name, Image, address, Description, Phone, Email;
     private long Table;
     private  double Lat;
-    private  double Long;
-    private String address;
-    private String rating;
+    private  double Long, Rating;
+
 
     public Category() {
+    }
+
+    public Category(String name, String image, String address, String description, String phone, String email, long table, double lat, double aLong, double rating) {
+        Name = name;
+        Image = image;
+        this.address = address;
+        Description = description;
+        Phone = phone;
+        Email = email;
+        Table = table;
+        Lat = lat;
+        Long = aLong;
+        Rating = rating;
     }
 
     protected Category(Parcel in) {
         Name = in.readString();
         Image = in.readString();
+        address = in.readString();
+        Description = in.readString();
+        Phone = in.readString();
+        Email = in.readString();
         Table = in.readLong();
         Lat = in.readDouble();
         Long = in.readDouble();
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+        Rating = in.readDouble();
     }
 
     public static final Creator<Category> CREATOR = new Creator<Category>() {
@@ -43,12 +53,60 @@ public class Category implements Parcelable {
         }
     };
 
+    public double getRating() {
+        return Rating;
+    }
+
+    public void setRating(double rating) {
+        Rating = rating;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public long getTable() {
+        return Table;
+    }
+
+    public void setTable(long table) {
+        Table = table;
+    }
+
     public double getLat() {
         return Lat;
     }
 
     public void setLat(double lat) {
-        this.Lat = lat;
+        Lat = lat;
     }
 
     public double getLong() {
@@ -56,15 +114,7 @@ public class Category implements Parcelable {
     }
 
     public void setLong(double aLong) {
-        this.Long = aLong;
-    }
-
-    public Category(String name, String image, long table, double Lat, double Long) {
-        Name = name;
-        Image = image;
-        Table = table;
-        this.Lat = Lat;
-        this.Long = Long;
+        Long = aLong;
     }
 
     public String getName() {
@@ -83,14 +133,6 @@ public class Category implements Parcelable {
         Image = image;
     }
 
-    public long getTable() {
-        return Table;
-    }
-
-    public void setTable(long table) {
-        Table = table;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -100,10 +142,13 @@ public class Category implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(Name);
         dest.writeString(Image);
+        dest.writeString(address);
+        dest.writeString(Description);
+        dest.writeString(Phone);
+        dest.writeString(Email);
         dest.writeLong(Table);
         dest.writeDouble(Lat);
         dest.writeDouble(Long);
+        dest.writeDouble(Rating);
     }
-
-
 }

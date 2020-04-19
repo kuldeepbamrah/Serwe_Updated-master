@@ -60,6 +60,7 @@ public class FoodList extends AppCompatActivity {
         txtRestDesc = findViewById(R.id.restaurant_description);
         txtRestaurantName.setText(objectRestaurant.getName());
         txtRestaurantAddress.setText(getAddress(new LatLng(objectRestaurant.getLat(), objectRestaurant.getLong())));
+        txtRestDesc.setText(objectRestaurant.getDescription());
 
         //Firebase
         database = FirebaseDatabase.getInstance();

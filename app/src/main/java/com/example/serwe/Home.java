@@ -188,6 +188,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
                 viewHolder.txtMenuName.setText(model.getName());
+
                 LatLng latLng = new LatLng(model.getLat(), model.getLong());
                 String address = getAddress(latLng);
                 viewHolder.txtMenuAddress.setText(getAddress(latLng));
