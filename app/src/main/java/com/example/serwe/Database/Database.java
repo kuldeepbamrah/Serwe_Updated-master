@@ -34,7 +34,7 @@ public class Database extends SQLiteAssetHelper {
         if(c.moveToFirst())
         {
             do{
-                //comment
+                //comment  new
                 result.add(new Order(c.getString(c.getColumnIndex("ProductId")),
                         c.getString(c.getColumnIndex("ProductName")),
                         c.getString(c.getColumnIndex("Quantity")),
