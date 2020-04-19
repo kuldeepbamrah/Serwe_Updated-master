@@ -1,6 +1,7 @@
 package com.example.serwe;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.serwe.Common.Common;
@@ -24,6 +26,7 @@ import com.example.serwe.Model.RandomId;
 import com.example.serwe.Model.Rating;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -119,9 +122,18 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 
                         ));
 
-                        Toast.makeText(FoodDetail.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(FoodDetail.this, "Added to Cart", Toast.LENGTH_SHORT).show();
 
                         alertDialog.dismiss();
+
+                        Snackbar snackbar = Snackbar.make(view,"Added To Cart",Snackbar.LENGTH_SHORT).setAction("Go to Cart", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent cartIntent = new Intent(FoodDetail.this,Cart.class);
+                                startActivity(cartIntent);
+                            }
+                        });
+                        snackbar.show();
 
 
 
