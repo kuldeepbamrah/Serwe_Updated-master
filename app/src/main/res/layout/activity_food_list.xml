@@ -115,6 +115,21 @@
         app:useCompatPadding="true"
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_contact"
+        android:src="@drawable/ic_phoneblack_foreground"
+        android:scaleType="fitXY"
+        android:backgroundTint="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:elevation="6dp"
+        app:layout_anchor="@id/app_bar_layout"
+        app:layout_anchorGravity="bottom|left"
+        app:useCompatPadding="true"
+        />
+
+
+
 
 
 

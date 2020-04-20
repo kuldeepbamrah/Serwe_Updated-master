@@ -1,5 +1,6 @@
 package com.example.serwe;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -7,9 +8,13 @@ import android.media.Image;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,15 +24,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.serwe.Common.Common;
+import com.example.serwe.Database.Database;
 import com.example.serwe.Interface.ItemClickListener;
 import com.example.serwe.Model.Category;
 import com.example.serwe.Model.Food;
+import com.example.serwe.Model.Order;
 import com.example.serwe.Model.Rating;
 import com.example.serwe.Model.RestaurantRating;
 import com.example.serwe.ViewHolder.FoodViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +46,7 @@ import com.stepstone.apprating.AppRatingDialog;
 import com.stepstone.apprating.listener.RatingDialogListener;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -51,7 +60,7 @@ public class FoodList extends AppCompatActivity implements RatingDialogListener 
     Category objectRestaurant;
     ImageView imgRestaurant;
     TextView txtRestaurantName, txtRestaurantAddress, txtRestDesc;
-    FloatingActionButton rating;
+    FloatingActionButton rating, contact, cart;
     RatingBar ratingBar;
 
     FirebaseDatabase database;
@@ -75,6 +84,7 @@ public class FoodList extends AppCompatActivity implements RatingDialogListener 
         txtRestaurantAddress = findViewById(R.id.restaurant_address);
         txtRestDesc = findViewById(R.id.restaurant_description);
         rating = findViewById(R.id.btn_rating);
+        contact = findViewById(R.id.btn_contact);
         ratingBar = findViewById(R.id.ratingBar);
         txtRestaurantName.setText(objectRestaurant.getName());
         txtRestaurantAddress.setText(getAddress(new LatLng(objectRestaurant.getLat(), objectRestaurant.getLong())));
@@ -90,6 +100,43 @@ public class FoodList extends AppCompatActivity implements RatingDialogListener 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // new view inflate for selecting nearby places option
+
+                AlertDialog.Builder builder = new AlertDialog.Builder( FoodList.this );
+                // builder.setTitle( "Edit Employee" );
+                LayoutInflater inflater = LayoutInflater.from( FoodList.this );
+                View v1 = inflater.inflate( R.layout.restaurant_contact_layout,null );
+                builder.setView( v1 );
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                final TextView phone = v1.findViewById(R.id.contact_phone);
+                final TextView email = v1.findViewById(R.id.contact_email);
+              phone.setText(objectRestaurant.getPhone());
+              email.setText(objectRestaurant.getEmail());
+                Button buttonEdit = v1.findViewById( R.id.button_addcart );
+
+                buttonEdit.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        // Toast.makeText(FoodDetail.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+
+                        alertDialog.dismiss();
+
+
+
+                    }
+                } );
+
+            }
+        });
 
 
         rating.setOnClickListener(new View.OnClickListener() {
