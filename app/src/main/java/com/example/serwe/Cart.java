@@ -1,9 +1,15 @@
 package com.example.serwe;
 
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +29,14 @@ import com.example.serwe.Database.Database;
 import com.example.serwe.Model.Order;
 import com.example.serwe.Model.Request;
 import com.example.serwe.ViewHolder.CartAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -33,6 +48,7 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -49,6 +65,13 @@ public class Cart extends AppCompatActivity {
     @BindView(R.id.total) TextView txtTotalPrice;
     @BindView(R.id.btnPlaceOrder)
     Button btnPlace;
+
+    double latitude, longitude;
+
+    private final int REQUEST_CODE = 1;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    LocationCallback locationCallback;
+    LocationRequest locationRequest;
 
     //paypal payment
     static PayPalConfiguration config = new PayPalConfiguration()
@@ -73,6 +96,19 @@ public class Cart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         ButterKnife.bind(this);
+
+        getUserLocation();
+
+        if(!checkPermission())
+        {
+            requestPermission();
+        }
+        else
+        {
+            fusedLocationProviderClient.requestLocationUpdates( locationRequest, locationCallback, Looper.myLooper() );
+        }
+
+
 
         //Init Paypal
         Intent intent = new Intent(this, PayPalService.class);
@@ -123,8 +159,10 @@ public class Cart extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
         // adding editText to layout params
+
         edtAddress.setLayoutParams(lp);
 
+        edtAddress.setText(getAddress(new LatLng(latitude,longitude)));
         // adding editText to alert dialog
         alertDialog.setView(edtAddress);
         alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
@@ -216,6 +254,53 @@ public class Cart extends AppCompatActivity {
         }
     }
 
+
+    private Boolean checkPermission()
+    {
+        int permissionState = ActivityCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION );
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission()
+    {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE );
+
+    }
+
+
+    //function to get current lat and long
+
+    private void getUserLocation()
+    {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient( this);
+        locationRequest = new LocationRequest();
+        locationRequest.setPriority( LocationRequest.PRIORITY_HIGH_ACCURACY );
+        locationRequest.setInterval( 5000 );
+        locationRequest.setFastestInterval( 3000 );
+        locationRequest.setSmallestDisplacement( 10 );
+        locationCallback = new LocationCallback(){
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                for (Location location : locationResult.getLocations())
+                {
+                    //new
+                    LatLng userLocation = new LatLng( location.getLatitude(), location.getLongitude());
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+
+
+
+
+                    // .icon( BitmapDescriptorFactory.fromResource( R.drawable.icon ) ));
+
+
+                }
+            }
+        };        //setFavouriteMarkers();
+
+
+    }
+
     /**
      * Loading food list
      */
@@ -234,5 +319,65 @@ public class Cart extends AppCompatActivity {
         Locale locale = new Locale("en", "US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
         txtTotalPrice.setText(fmt.format(total));
+    }
+
+    private String getAddress(LatLng latLng)
+    {
+        String address = "";
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try
+        {
+            List<Address> addresses = geocoder.getFromLocation( latLng.latitude, latLng.longitude, 1 );
+            if (addresses != null && addresses.size() > 0)
+            {
+                //Log.i(TAG, "on Location Result:" + addresses.get(0));
+                if (addresses.get(0).getSubThoroughfare() != null)
+                {
+                    address += addresses.get(0).getSubThoroughfare() + ", ";
+
+                }
+
+                if (addresses.get(0).getThoroughfare() != null)
+                {
+                    address += addresses.get(0).getThoroughfare();
+
+                }
+
+
+                if (addresses.get(0).getLocality() != null)
+                {
+                    address += " " + addresses.get(0).getLocality();
+
+                }
+
+                if (addresses.get(0).getAdminArea() != null)
+                {
+                    address += " " + addresses.get(0).getAdminArea();
+                }
+
+//                if (addresses.get(0).getCountryName() != null)
+//                {
+//                    address +=  " " + addresses.get(0).getCountryName();
+//
+//                }
+//                if (addresses.get(0).getPostalCode() != null)
+//                {
+//                    address += " " + addresses.get(0).getPostalCode();
+//
+//                }
+
+                Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return address;
+
     }
 }
