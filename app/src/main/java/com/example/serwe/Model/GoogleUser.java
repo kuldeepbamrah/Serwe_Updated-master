@@ -1,10 +1,13 @@
 package com.example.serwe.Model;
 
+import android.net.Uri;
+
 public class GoogleUser
 {
     private String email;
     private String name;
     private String token;
+    private Uri img;
 
     public String getEmail() {
         return email;
@@ -16,6 +19,14 @@ public class GoogleUser
 
     public String getName() {
         return name;
+    }
+
+    public Uri getImg() {
+        return img;
+    }
+
+    public void setImg(Uri img) {
+        this.img = img;
     }
 
     public String getToken() {
@@ -30,10 +41,11 @@ public class GoogleUser
         this.name = name;
     }
 
-    public GoogleUser(String email, String name, String token) {
+    public GoogleUser(String email, String name, String token, Uri img) {
         this.email = email;
         this.name = name;
         this.token = token;
+        this.img = img;
     }
 
     public GoogleUser() {

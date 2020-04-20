@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,6 +78,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     DatabaseReference category,requests;
 
     TextView txtFullName;
+    ImageView imageView;
 
     RecyclerView recycler_menu;
     RecyclerView.LayoutManager layoutManager;
@@ -147,6 +149,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         View headerView= navigationView.getHeaderView(0);
         txtFullName = (TextView)headerView.findViewById(R.id.txtFullName);
         txtFullName.setText(Common.currentUser.getName());
+        imageView = findViewById(R.id.profileImg);
+
 
 
         //Load menu

@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             googleUser.setEmail(account.getEmail());
             googleUser.setName(account.getDisplayName());
             googleUser.setToken(account.getIdToken());
+            googleUser.setImg(account.getPhotoUrl());
             user.setName(account.getDisplayName());
             Intent homeIntent= new Intent(MainActivity.this,Home.class);
             Common.currentUser=user;
