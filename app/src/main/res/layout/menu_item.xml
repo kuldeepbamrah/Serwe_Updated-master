@@ -75,35 +75,97 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:gravity="right"
                     android:padding="5dp"
 
                     android:orientation="horizontal"
                     >
-                    <Button
+
+
+
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+                    <ImageButton
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/distance"
+                        android:scaleType="fitXY"
                         android:id="@+id/menu_direction"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:text="direction"
-                        android:textSize="12dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:background="@color/colorPrimaryDark"
-                        android:textColor="@color/cardview_light_background"
-                        />
-                    <Button
+                        android:background="@android:color/white">
+
+
+                    </ImageButton>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:text="Direction"
+                            android:textSize="8dp"
+                            >
+
+                        </TextView>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="1dp"
+
+                        android:layout_gravity="center"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="2dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginRight="2dp">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+                    <ImageButton
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/dining"
+                        android:scaleType="fitXY"
                         android:id="@+id/menu_table"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:text="Book Table"
-                        android:textSize="12dp"
-                        android:layout_marginLeft="10dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:background="@color/colorPrimaryDark"
-                        android:textColor="@color/cardview_light_background"
+                        android:background="@android:color/white"
                         >
 
-                    </Button>
+                    </ImageButton>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:text="Book Table"
+                            android:textSize="8dp"
+                            />
+                    </LinearLayout>
+<!--                    <Button-->
+<!--                        android:id="@+id/menu_direction"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="direction"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        android:background="@color/colorPrimaryDark"-->
+<!--                        android:textColor="@color/cardview_light_background"-->
+<!--                        />-->
+<!--                    <Button-->
+<!--                        android:id="@+id/menu_table"-->
+<!--                        android:layout_width="80dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="Book Table"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        android:background="@color/colorPrimaryDark"-->
+<!--                        android:textColor="@color/cardview_light_background"-->
+<!--                        >-->
+
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

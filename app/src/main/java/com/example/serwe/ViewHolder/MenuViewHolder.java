@@ -2,6 +2,7 @@ package com.example.serwe.ViewHolder;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +15,7 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     public TextView txtMenuName, txtMenuAddress;
     public ImageView imageView;
-    public Button buttonDirection,bookTable;
+    public ImageButton buttonDirection,bookTable;
 
 
     private ItemClickListener itemClickListener;

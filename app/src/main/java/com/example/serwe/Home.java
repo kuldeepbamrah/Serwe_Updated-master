@@ -407,7 +407,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                         // Deleting cart
                         new Database(getBaseContext()).cleanCart();
                         Toast.makeText(this, " Thank you,Table Booked", Toast.LENGTH_SHORT).show();
-                        finish();
+                        //finish();
 
 
 
