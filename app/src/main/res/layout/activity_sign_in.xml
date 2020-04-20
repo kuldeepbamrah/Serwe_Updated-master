@@ -101,6 +101,7 @@
                     android:adjustViewBounds="true"
                     android:alpha="1.0"
                     android:layout_marginLeft="10dp"
+                    android:inputType="textPassword"
                     android:background="@drawable/edittext"
                     android:hint="Password"
                     />
