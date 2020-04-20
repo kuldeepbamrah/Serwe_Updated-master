@@ -79,6 +79,8 @@
                     android:gravity="right"
                     android:padding="5dp"
 
+                    android:layout_gravity="center_vertical"
+
                     android:orientation="horizontal"
                     >
 
@@ -91,8 +93,8 @@
                         android:layout_gravity="center"
                         android:gravity="center">
                     <ImageButton
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:src="@drawable/distance"
                         android:scaleType="fitXY"
                         android:id="@+id/menu_direction"
@@ -127,8 +129,8 @@
                         android:layout_gravity="center"
                         android:gravity="center">
                     <ImageButton
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:src="@drawable/dining"
                         android:scaleType="fitXY"
                         android:id="@+id/menu_table"

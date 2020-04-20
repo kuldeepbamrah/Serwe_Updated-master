@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class SignIn extends AppCompatActivity {
 
     EditText edtPhone,edtPassword;
     Button btnLogin;
+    CheckBox rememberMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class SignIn extends AppCompatActivity {
         edtPassword = (EditText)findViewById(R.id.edtPassword);
         edtPhone = (EditText)findViewById(R.id.edtPhone);
         btnLogin =  (Button) findViewById(R.id.btnLogin);
+        rememberMe = findViewById(R.id.rememberMeBtn);
+
 
         //Init Firebase
 
@@ -57,6 +61,7 @@ public class SignIn extends AppCompatActivity {
                                 User user = dataSnapshot.child(edtPhone.getText().toString()).getValue(User.class);
                                 user.setPhone(edtPhone.getText().toString());//set phone
                                 if (user.getPassword().equals(edtPassword.getText().toString())) {
+
 
                                     Intent homeIntent= new Intent(SignIn.this,Home.class);
                                     Common.currentUser=user;
