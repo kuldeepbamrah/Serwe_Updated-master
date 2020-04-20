@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.example.serwe.Database.Database;
 import com.example.serwe.Interface.ItemClickListener;
 import com.example.serwe.Model.Order;
 import com.example.serwe.R;
@@ -25,6 +26,7 @@ class CartviewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
     public TextView txt_cart_name,txt_price, txt_cart_spicy, txt_cart_comment;
     public ImageView img_cart_count;
+
 
     private ItemClickListener itemClickListener;
 
@@ -92,4 +94,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartviewHolder>{
     public int getItemCount() {
         return listData.size();
     }
+    public Context getContext() {
+        return context;
+    }
+
+    public void deleteItem(int position)
+    {
+
+
+        new Database(getContext()).deleteCart(listData.get(position).getProductId());
+        listData.remove(position);
+        notifyItemRemoved(position);
+
+    }
+
 }
