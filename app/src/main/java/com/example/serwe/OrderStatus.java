@@ -67,9 +67,10 @@ public class OrderStatus extends AppCompatActivity {
                 // get key from DatabaseReference
                 viewHolder.txtOrderId.setText("Order No. : " + adapter.getRef(position).getKey());
                 // set text for order status, address and phone
-                viewHolder.txtOrderStatus.setText("Order Status. : " + convertCodeToStatus(model.getStatus()));
+                viewHolder.txtOrderStatus.setText("Order Status. : " + model.getStatus());
                 viewHolder.txtOrAddress.setText("Order Address. : " + model.getAddress());
                 viewHolder.txtOrderPhone.setText("Order Total. : " + model.getTotal());
+                viewHolder.txtPayment.setText(model.getPaymentState());
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {

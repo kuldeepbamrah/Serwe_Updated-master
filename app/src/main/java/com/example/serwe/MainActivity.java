@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     SignInButton gBtn;
     private static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient ;
+    ImageView imageView;
 
 
     @Override
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             googleUser.setEmail(account.getEmail());
             googleUser.setName(account.getDisplayName());
             //googleUser.setToken(account.getIdToken());
+
 
             user.setName(account.getDisplayName());
             Intent homeIntent= new Intent(MainActivity.this,Home.class);
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         btnSignUp = (Button)findViewById(R.id.btnSignUp);
         //button3 = (Button)findViewById(R.id.button3);
         gBtn = findViewById(R.id.gBtn);
+        imageView = findViewById(R.id.mainImage);
+
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
