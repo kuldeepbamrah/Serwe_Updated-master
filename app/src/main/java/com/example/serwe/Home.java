@@ -229,19 +229,25 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String formatAmount ="10";
+                                if(model.getTable()>0) {
+                                    String formatAmount = "10";
 
-                                PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(formatAmount),
-                                        "CAD",
-                                        "Serwe Table",
-                                        PayPalPayment.PAYMENT_INTENT_SALE);
-                                Intent intent = new Intent (getApplicationContext() , PaymentActivity.class);
-                                intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
-                                intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
-                                startActivityForResult(intent,PAYPAL_REQUEST_CODE);
+                                    PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(formatAmount),
+                                            "CAD",
+                                            "Serwe Table",
+                                            PayPalPayment.PAYMENT_INTENT_SALE);
+                                    Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                                    intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+                                    intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+                                    startActivityForResult(intent, PAYPAL_REQUEST_CODE);
 
-                                category.child(adapter.getRef(position).getKey()).child("table").setValue(model.getTable()-1);
+                                    category.child(adapter.getRef(position).getKey()).child("table").setValue(model.getTable() - 1);
 
+                                }
+                                else
+                                {
+                                    button.setEnabled(false);
+                                }
                             }
                         });
 
@@ -393,7 +399,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                                 Common.currentUser.getName(),
                                 null,
                                 "10",
-                                "0",
+                                "Table",
                                 jsonObject.getJSONObject("response").getString("state"),
                                 null
                         );
@@ -407,7 +413,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                         // Deleting cart
                         new Database(getBaseContext()).cleanCart();
                         Toast.makeText(this, " Thank you,Table Booked", Toast.LENGTH_SHORT).show();
-                        finish();
+                        //finish();
 
 
 

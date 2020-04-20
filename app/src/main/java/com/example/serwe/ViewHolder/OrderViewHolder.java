@@ -11,7 +11,7 @@ import com.example.serwe.R;
 
 public class OrderViewHolder extends RecyclerView.ViewHolder implements OnClickListener{
 
-    public TextView txtOrderId, txtOrderStatus, txtOrderPhone, txtOrAddress;
+    public TextView txtOrderId, txtOrderStatus, txtOrderPhone, txtOrAddress,txtPayment;
 
     private ItemClickListener itemClickListener;
 
@@ -22,6 +22,8 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements OnClickL
         txtOrderStatus = itemView.findViewById(R.id.order_status);
         txtOrderPhone = itemView.findViewById(R.id.order_phone);
         txtOrAddress = itemView.findViewById(R.id.order_address);
+        txtPayment = itemView.findViewById(R.id.paymentStatus);
+
 
         itemView.setOnClickListener(this);
     }

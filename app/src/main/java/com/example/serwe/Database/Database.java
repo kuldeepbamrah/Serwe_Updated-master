@@ -72,4 +72,12 @@ public class Database extends SQLiteAssetHelper {
 
     }
 
+    public void deleteCart(String position)
+    {
+
+        String where = "ProductID=?";
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("OrderDetail",where,new String[]{position});
+    }
+
 }

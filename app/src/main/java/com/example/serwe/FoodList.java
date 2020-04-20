@@ -143,13 +143,13 @@ public class FoodList extends AppCompatActivity implements RatingDialogListener 
             @Override
             public void onClick(View view) {
 
+                showRatingDialog();
                 RestaurantRating.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.child(Common.currentUser.getName()+categoryId).exists())
-                            Toast.makeText(getApplicationContext(),"Rating already givm",Toast.LENGTH_SHORT).show();
-                        else
-                            showRatingDialog();
+
+
+                            getRating(categoryId);
                     }
 
                     @Override
@@ -289,7 +289,15 @@ public class FoodList extends AppCompatActivity implements RatingDialogListener 
         RestaurantRating.child(Common.currentUser.getName()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                RestaurantRating.child(Common.currentUser.getName()+categoryId).setValue(restaurantRating);
+
+                if(dataSnapshot.child(Common.currentUser.getName()+categoryId).exists()) {
+                    RestaurantRating.child(Common.currentUser.getName()+categoryId).removeValue();
+                    RestaurantRating.child(Common.currentUser.getName() + categoryId).setValue(restaurantRating);
+                }
+                else
+                {
+                    RestaurantRating.child(Common.currentUser.getName() + categoryId).setValue(restaurantRating);
+                }
             }
 
             @Override
