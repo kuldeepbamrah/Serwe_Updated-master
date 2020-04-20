@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     android:padding="16dp"
     tools:context="com.example.serwe.Cart">
 
@@ -16,17 +15,21 @@
 
     <androidx.cardview.widget.CardView
         android:layout_alignParentBottom="true"
+        app:cardCornerRadius="18dp"
+        android:elevation="4dp"
         app:cardBackgroundColor="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="100dp">
         
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <LinearLayout
                 android:layout_margin="8dp"
                 android:gravity="center_vertical"
+                android:layout_centerHorizontal="true"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,18 +54,34 @@
                 
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:layout_alignParentBottom="true"
+                app:cardCornerRadius="18dp"
+                android:elevation="4dp"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="8dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout3"
+                android:background="@android:color/transparent">
             <Button
                 android:id="@+id/btnPlaceOrder"
                 android:text="Place Order"
                 android:background="@android:color/black"
                 android:textColor="@android:color/white"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
+
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_below="@+id/linearLayout3" />
+
+                 />
+            </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
 
