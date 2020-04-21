@@ -117,8 +117,8 @@ public class FoodList extends AppCompatActivity implements RatingDialogListener 
                 alertDialog.show();
                 final TextView phone = v1.findViewById(R.id.contact_phone);
                 final TextView email = v1.findViewById(R.id.contact_email);
-              phone.setText(objectRestaurant.getPhone());
-              email.setText(objectRestaurant.getEmail());
+              phone.setText(objectRestaurant.getEmail());
+              email.setText(objectRestaurant.getPhone());
                 Button buttonEdit = v1.findViewById( R.id.button_addcart );
 
                 buttonEdit.setOnClickListener( new View.OnClickListener() {
