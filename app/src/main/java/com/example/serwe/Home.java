@@ -317,28 +317,39 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             startActivity(orderIntent);
 
         } else if (id == R.id.log_out) {
+
             mGoogleSignInClient.signOut()
                     .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            finish();
                             new AlertDialog.Builder(Home.this)
                                     .setTitle("Sign Out")
-                                    .setMessage("You need to sign in again to access the app")
+                                    .setMessage("Are you sure you want to logout the app")
 
                                     // Specifying a listener allows you to take an action before dismissing the dialog.
                                     // The dialog is automatically dismissed when a dialog button is clicked.
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
+                                            finish();
+
+                                        }
+                                    })
+                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+
                                         }
                                     })
 
                                     // A null listener allows the button to dismiss the dialog and take no further action.
                                     .setIcon(android.R.drawable.ic_dialog_alert)
                                     .show();
+
                         }
-                    });
+                    }
+
+                    );
 
         }
         else if (id == R.id.nav_tables)
