@@ -76,7 +76,7 @@ public class Table extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(Table.this, "" + position, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Table.this, "" + position, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

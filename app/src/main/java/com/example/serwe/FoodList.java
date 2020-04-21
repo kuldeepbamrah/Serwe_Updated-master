@@ -110,6 +110,7 @@ public class FoodList extends AppCompatActivity implements RatingDialogListener 
 
                 AlertDialog.Builder builder = new AlertDialog.Builder( FoodList.this );
                 // builder.setTitle( "Edit Employee" );
+
                 LayoutInflater inflater = LayoutInflater.from( FoodList.this );
                 View v1 = inflater.inflate( R.layout.restaurant_contact_layout,null );
                 builder.setView( v1 );
@@ -239,7 +240,7 @@ public class FoodList extends AppCompatActivity implements RatingDialogListener 
 //
 //                }
 
-                Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
 
 
             }
@@ -322,7 +323,7 @@ public class FoodList extends AppCompatActivity implements RatingDialogListener 
                     RestaurantRating item = postSnapshot.getValue(RestaurantRating.class);
                     sum+=Integer.parseInt(item.getRateValue());
                     count++;
-                    Toast.makeText(getApplicationContext(),"COunt "+count+" Sum "+sum, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"COunt "+count+" Sum "+sum, Toast.LENGTH_LONG).show();
                 }
                 if(count!=0) {
                     float average = sum/count;

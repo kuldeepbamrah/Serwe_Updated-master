@@ -1,6 +1,8 @@
 package com.example.serwe;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,35 +42,84 @@ public class SignUp extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog mDialog = new ProgressDialog(SignUp.this);
-                mDialog.setMessage("Please Wait");
-                mDialog.show();
 
-                table_user.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //check if already user phone
-                        if(dataSnapshot.child(edtPhone.getText().toString()).exists()){
-                            mDialog.dismiss();
-                            Toast.makeText(SignUp.this, "Phone number already registered", Toast.LENGTH_SHORT).show();
+                if (edtPhone.getText().toString().isEmpty() || edtPassword.getText().toString().isEmpty() || edtName.getText().toString().isEmpty()) {
+                    new AlertDialog.Builder(SignUp.this)
+                            .setTitle("Empty Fields")
+                            .setMessage("Please Fill all the empty fields")
+
+                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                            // The dialog is automatically dismissed when a dialog button is clicked.
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+
+                else {
+                    final ProgressDialog mDialog = new ProgressDialog(SignUp.this);
+                    mDialog.setMessage("Please Wait");
+                    mDialog.show();
+
+                    table_user.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //check if already user phone
+                            if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
+                                mDialog.dismiss();
+                                new AlertDialog.Builder(SignUp.this)
+                                        .setTitle("Signup Form")
+                                        .setMessage("This user is already registered")
+
+                                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                                        // The dialog is automatically dismissed when a dialog button is clicked.
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+
+                                        // A null listener allows the button to dismiss the dialog and take no further action.
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+                                //Toast.makeText(SignUp.this, "Phone number already registered", Toast.LENGTH_SHORT).show();
+                            } else {
+                                mDialog.dismiss();
+                                User user = new User(edtName.getText().toString(), edtPassword.getText().toString());
+                                table_user.child(edtPhone.getText().toString()).setValue(user);
+                                //Toast.makeText(SignUp.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
+                                new AlertDialog.Builder(SignUp.this)
+                                        .setTitle("Signup Form")
+                                        .setMessage("Congartulations! You are registered Successfully")
+
+                                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                                        // The dialog is automatically dismissed when a dialog button is clicked.
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+
+                                        // A null listener allows the button to dismiss the dialog and take no further action.
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+                                finish();
+
+
+                            }
                         }
-                        else{
-                            mDialog.dismiss();
-                            User user = new User(edtName.getText().toString(),edtPassword.getText().toString());
-                            table_user.child(edtPhone.getText().toString()).setValue(user);
-                            Toast.makeText(SignUp.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
-                            finish();
 
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
+                    });
+                }
             }
         });
     }

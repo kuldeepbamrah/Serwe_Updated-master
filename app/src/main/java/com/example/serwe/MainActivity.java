@@ -1,5 +1,7 @@
 package com.example.serwe;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -134,11 +136,26 @@ public class MainActivity extends AppCompatActivity {
             Common.googleUser=googleUser;
             startActivity(homeIntent);
             //finish();
-            Toast.makeText(this, "Welcome,"+ name, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Welcome,"+ name, Toast.LENGTH_SHORT).show();
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Toast.makeText(getApplicationContext(), "Login Failed!", Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Error Found")
+                    .setMessage("Login Failed")
+
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            //Toast.makeText(getApplicationContext(), "Login Failed!", Toast.LENGTH_LONG).show();
         }
     }
 

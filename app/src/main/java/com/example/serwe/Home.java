@@ -1,6 +1,8 @@
 package com.example.serwe;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -206,7 +208,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                     public void onClick(View v) {
                         Intent foodList = new Intent(Home.this,LocationRestaurantActivity.class);
                         foodList.putExtra("directionobject", model);
-                        Toast.makeText(getApplicationContext(),"lat:"+String.valueOf( model.getLat())+" LOng:" + model.getLong(),Toast.LENGTH_LONG).show();
                         startActivity(foodList);
                     }
                 });
@@ -267,7 +268,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                         Intent foodList = new Intent(Home.this,FoodList.class);
                         foodList.putExtra("CategoryId",adapter.getRef(position).getKey());
                         foodList.putExtra("restaurantDetail", model);
-                        Toast.makeText(getApplicationContext(),""+model.getTable(),Toast.LENGTH_LONG).show();
                         startActivity(foodList);
                     }
                 });
@@ -321,8 +321,22 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                     .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(getApplicationContext(),"Signed Out",Toast.LENGTH_LONG).show();
                             finish();
+                            new AlertDialog.Builder(Home.this)
+                                    .setTitle("Sign Out")
+                                    .setMessage("You need to sign in again to access the app")
+
+                                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                                    // The dialog is automatically dismissed when a dialog button is clicked.
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+
+                                    // A null listener allows the button to dismiss the dialog and take no further action.
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
                         }
                     });
 
@@ -378,7 +392,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 //
 //                }
 
-                Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
 
 
             }
@@ -422,7 +435,22 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                                 .setValue(request);
                         // Deleting cart
                         new Database(getBaseContext()).cleanCart();
-                        Toast.makeText(this, " Thank you,Table Booked", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, " Thank you,Table Booked", Toast.LENGTH_SHORT).show();
+                        new AlertDialog.Builder(Home.this)
+                                .setTitle("Table Booking")
+                                .setMessage("Your table has been booked")
+
+                                // Specifying a listener allows you to take an action before dismissing the dialog.
+                                // The dialog is automatically dismissed when a dialog button is clicked.
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+
+                                // A null listener allows the button to dismiss the dialog and take no further action.
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
                         //finish();
                         category.child(temp).child("table").setValue(table);
 
@@ -433,8 +461,21 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 }
                 else
                 {
-                    Toast.makeText(this,"went wrong",Toast.LENGTH_LONG).show();
-                }
+                    new AlertDialog.Builder(Home.this)
+                            .setTitle("Error")
+                            .setMessage("Something went Wrong")
+
+                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                            // The dialog is automatically dismissed when a dialog button is clicked.
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();                }
             }
 
         }

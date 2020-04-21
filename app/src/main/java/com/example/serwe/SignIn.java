@@ -1,7 +1,9 @@
 package com.example.serwe;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -42,7 +44,8 @@ public class SignIn extends AppCompatActivity {
         rememberMe = findViewById(R.id.rememberMeBtn);
 
         sharedPreferences =this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-       if(sharedPreferences.contains("uname"));
+
+        if(sharedPreferences.contains("uname"));
         {
             Toast.makeText(this,"exiists",Toast.LENGTH_SHORT).show();
            uname= loadData(this,"uname");
@@ -64,12 +67,34 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final ProgressDialog mDialog = new ProgressDialog(SignIn.this);
-                mDialog.setMessage("Please Wait");
-                mDialog.show();
+                if (edtPhone.getText().toString().isEmpty() || edtPassword.getText().toString().isEmpty()) {
+                    new AlertDialog.Builder(SignIn.this)
+                            .setTitle("Empty Fields")
+                            .setMessage("Please Enter both Phone Number and Password")
+
+                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                            // The dialog is automatically dismissed when a dialog button is clicked.
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+
+                else {
+
+
+                    final ProgressDialog mDialog = new ProgressDialog(SignIn.this);
+                    mDialog.setMessage("Please Wait");
+                    mDialog.show();
                     table_user.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+
 
                             //Chech if user exist
                             if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
@@ -81,28 +106,52 @@ public class SignIn extends AppCompatActivity {
                                 if (user.getPassword().equals(edtPassword.getText().toString())) {
 
 
-                                    if(rememberMe.isChecked())
-                                    saveData(getApplicationContext(),edtPhone.getText().toString(),edtPassword.getText().toString());
-                                    if(!rememberMe.isChecked())
-                                        if(sharedPreferences.contains("uname")) {
+                                    if (rememberMe.isChecked())
+                                        saveData(getApplicationContext(), edtPhone.getText().toString(), edtPassword.getText().toString());
+                                    if (!rememberMe.isChecked())
+                                        if (sharedPreferences.contains("uname")) {
                                             sharedPreferences.edit().clear().apply();
-                                            Toast.makeText(getApplicationContext(),"deleted",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), "deleted", Toast.LENGTH_SHORT).show();
                                         }
 
-                                    Intent homeIntent= new Intent(SignIn.this,Home.class);
-                                    Common.currentUser=user;
+                                    Intent homeIntent = new Intent(SignIn.this, Home.class);
+                                    Common.currentUser = user;
                                     startActivity(homeIntent);
                                     finish();
 
-                                }
-                                else{
-                                    Toast.makeText(SignIn.this, "Sign In Failed!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            else {
+                                } else {
+                                    new AlertDialog.Builder(SignIn.this)
+                                            .setTitle("Wrong password")
+                                            .setMessage("Please Enter a valid Password")
+
+                                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                                            // The dialog is automatically dismissed when a dialog button is clicked.
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            })
+
+                                            // A null listener allows the button to dismiss the dialog and take no further action.
+                                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                            .show();                                }
+                            } else {
                                 mDialog.dismiss();
-                                Toast.makeText(SignIn.this, "User Does not exist! ", Toast.LENGTH_SHORT).show();
-                            }
+                                new AlertDialog.Builder(SignIn.this)
+                                        .setTitle("No User Registered")
+                                        .setMessage("This phone number is not registered")
+
+                                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                                        // The dialog is automatically dismissed when a dialog button is clicked.
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+
+                                        // A null listener allows the button to dismiss the dialog and take no further action.
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();                            }
                         }
 
                         @Override
@@ -110,7 +159,10 @@ public class SignIn extends AppCompatActivity {
 
                         }
                     });
+                }
+
             }
+
         });
     }
 

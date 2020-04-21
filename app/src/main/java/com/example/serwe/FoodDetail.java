@@ -1,6 +1,7 @@
 package com.example.serwe;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -149,7 +150,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
 //                ));
 
                 //new Database(getBaseContext()).cleanCart();
-                Toast.makeText(FoodDetail.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FoodDetail.this, "Added to Cart", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -183,7 +184,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                     Rating item = postSnapshot.getValue(Rating.class);
                     sum+=Integer.parseInt(item.getRateValue());
                     count++;
-                    Toast.makeText(getApplicationContext(),"COunt "+count+" Sum "+sum, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"COunt "+count+" Sum "+sum, Toast.LENGTH_LONG).show();
                 }
                 if(count!=0) {
                     float average = sum/count;
@@ -306,7 +307,22 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                 {
                     ratingTbl.child(s1).setValue(rating);
                 }
-                Toast.makeText(getApplicationContext(),"Thank you for Feed back",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"Thank you for Feed back",Toast.LENGTH_LONG).show();
+                new AlertDialog.Builder(FoodDetail.this)
+                        .setTitle("Feedback")
+                        .setMessage("Thankyou for your valuable Feedback")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
 
             @Override

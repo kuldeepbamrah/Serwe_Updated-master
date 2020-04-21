@@ -238,8 +238,24 @@ public class Cart extends AppCompatActivity {
                                 .setValue(request);
                         // Deleting cart
                         new Database(getBaseContext()).cleanCart();
-                        Toast.makeText(Cart.this, " Thank you, Order Place", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Cart.this, " Thank you, Order Place", Toast.LENGTH_SHORT).show();
+
                         finish();
+                        new android.app.AlertDialog.Builder(Cart.this)
+                                .setTitle("Order Placed")
+                                .setMessage("Thankyou, your order has been placed")
+
+                                // Specifying a listener allows you to take an action before dismissing the dialog.
+                                // The dialog is automatically dismissed when a dialog button is clicked.
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+
+                                // A null listener allows the button to dismiss the dialog and take no further action.
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
 
 
                     } catch (JSONException e) {
@@ -372,7 +388,7 @@ public class Cart extends AppCompatActivity {
 //
 //                }
 
-                Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
 
 
             }
