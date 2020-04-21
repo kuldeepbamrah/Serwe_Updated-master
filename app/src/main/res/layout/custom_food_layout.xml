@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@color/cardview_dark_background">
 
 
     <androidx.cardview.widget.CardView
@@ -88,9 +88,8 @@
             android:background="@drawable/edittext"
             android:hint="Comment"
             android:lines="2"
-            android:inputType="textPassword"
             android:padding="10dp"
-            android:textColor="@android:color/black"
+            android:textColor="#000"
             android:textColorHint= "@android:color/darker_gray" />
 
         <Button
