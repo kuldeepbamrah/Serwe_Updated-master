@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
     implementation 'com.stepstone.apprating:app-rating:2.0.0'
+    //paypal
     implementation 'com.paypal.sdk:paypal-android-sdk:2.15.3'
     implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
