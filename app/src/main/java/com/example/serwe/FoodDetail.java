@@ -236,7 +236,7 @@ public class FoodDetail extends AppCompatActivity implements RatingDialogListene
                 .setHint("Please write your comment here")
                 .setHintTextColor(R.color.colorAccent)
                 .setCommentTextColor(android.R.color.white)
-                .setCommentBackgroundColor(R.color.colorPrimaryDark)
+                .setCommentBackgroundColor(R.color.quantum_grey)
                 .setWindowAnimation(R.style.RatingDialogFadeAnim)
                 .create(FoodDetail.this)
                 .show();

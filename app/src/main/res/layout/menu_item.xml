@@ -93,8 +93,8 @@
                         android:layout_gravity="center"
                         android:gravity="center">
                     <ImageButton
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:src="@drawable/distance"
                         android:scaleType="fitXY"
                         android:id="@+id/menu_direction"
@@ -129,8 +129,8 @@
                         android:layout_gravity="center"
                         android:gravity="center">
                     <ImageButton
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:src="@drawable/dining"
                         android:scaleType="fitXY"
                         android:id="@+id/menu_table"

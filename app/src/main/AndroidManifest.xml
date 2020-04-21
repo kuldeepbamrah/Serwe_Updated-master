@@ -15,12 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <activity android:name=".Table"></activity>
+
         <service
             android:name=".Service.ListenOrder"
             android:enabled="true"
-            android:exported="true">
-
-        </service>
+            android:exported="true"></service>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

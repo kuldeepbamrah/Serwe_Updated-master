@@ -1,16 +1,12 @@
 package com.example.serwe;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
@@ -36,7 +32,7 @@ import com.example.serwe.Database.Database;
 import com.example.serwe.Interface.ItemClickListener;
 import com.example.serwe.Model.Category;
 
-import com.example.serwe.Model.Request;
+import com.example.serwe.Model.Tablem;
 import com.example.serwe.Service.ListenOrder;
 import com.example.serwe.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -75,7 +71,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     FirebaseDatabase database;
     private static final int PAYPAL_REQUEST_CODE = 9999;
-    DatabaseReference category,requests;
+    DatabaseReference category,requests,tables;
 
     TextView txtFullName;
     ImageView imageView;
@@ -85,6 +81,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter;
     GoogleSignInClient mGoogleSignInClient ;
+    String temp;
+    long table;
 
 
     static PayPalConfiguration config = new PayPalConfiguration()
@@ -128,6 +126,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         category = database.getReference("Category");
 
         requests = database.getReference("Requests");
+
+        tables = database.getReference("Tables");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -241,14 +241,19 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                                     intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
                                     startActivityForResult(intent, PAYPAL_REQUEST_CODE);
 
-                                    category.child(adapter.getRef(position).getKey()).child("table").setValue(model.getTable() - 1);
+                                    temp = adapter.getRef(position).getKey();
+                                    table = model.getTable()-1;
+                                    mBottomSheetDialog.dismiss();
+                                    //category.child(adapter.getRef(position).getKey()).child("table").setValue(model.getTable() - 1);
 
                                 }
                                 else
                                 {
                                     button.setEnabled(false);
+                                    button.setText("No Tables Available");
                                 }
                             }
+
                         });
 
                     {
@@ -322,6 +327,11 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                     });
 
         }
+        else if (id == R.id.nav_tables)
+        {
+            Intent tableIntent = new Intent(Home.this,Table.class);
+            startActivity(tableIntent);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -394,27 +404,27 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                         JSONObject jsonObject = new JSONObject(paymentDetail);
 
                         // Create new request
-                        Request request = new Request(
+                        Tablem request = new Tablem(
                                 Common.currentUser.getPhone(),
                                 Common.currentUser.getName(),
                                 null,
                                 "10",
-                                "Table",
+                                "Booked",
                                 jsonObject.getJSONObject("response").getString("state"),
-                                null
+                                getAlphaNumericString(4)
                         );
 
                         //Request request1 = new Request(Common.currentUser.getPhone(),Common.currentUser.getName(),address,txtTotalPrice.getText().toString(),"0",);
 
                         // Submit to Firebase
                         // Using System.CurrentMillis to key
-                        requests.child(String.valueOf(System.currentTimeMillis()))
+                        tables.child(String.valueOf(System.currentTimeMillis()))
                                 .setValue(request);
                         // Deleting cart
                         new Database(getBaseContext()).cleanCart();
                         Toast.makeText(this, " Thank you,Table Booked", Toast.LENGTH_SHORT).show();
                         //finish();
-
+                        category.child(temp).child("table").setValue(table);
 
 
                     } catch (JSONException e) {
@@ -428,5 +438,31 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             }
 
         }
+    }
+
+    public String getAlphaNumericString(int n) {
+
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
+
+        for (int i = 0; i < n; i++) {
+
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                    = (int) (AlphaNumericString.length()
+                    * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+
+        return sb.toString();
     }
 }
