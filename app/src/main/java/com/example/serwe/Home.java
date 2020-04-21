@@ -282,8 +282,42 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            mGoogleSignInClient.signOut()
+                    .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    new AlertDialog.Builder(Home.this)
+                                            .setTitle("Sign Out")
+                                            .setMessage("Are you sure you want to logout the app")
+
+                                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                                            // The dialog is automatically dismissed when a dialog button is clicked.
+                                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                    finish();
+
+                                                }
+                                            })
+                                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+
+                                                }
+                                            })
+
+                                            // A null listener allows the button to dismiss the dialog and take no further action.
+                                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                            .show();
+
+                                }
+                            }
+
+                    );
         }
+
+
+
     }
 
     @Override
@@ -415,6 +449,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         return address;
 
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
